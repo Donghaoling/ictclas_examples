@@ -220,11 +220,11 @@ if not SetPOSmap(3): #POSMap.ICT_POS_MAP_SECOND
     print("Setting POS Map failed!")
     exit(-22222)
 '''
-
+#seg于segment+Seg的区别：
 def seg(paragraph):
     result = ParagraphProcess(paragraph, c_int(1))
     atoms = [i.strip().split('/') for i in result.split(' ') if len(i)>=1 and i[0]!=' ']
-    atoms = [(a[0],a[1]) for a in atoms if len(a[0])>0]
+    atoms = [(a[0],a[1]) for a in atoms if len(a[0])>0]  #a[0]是词，a[1]是词性
     return atoms
 
 def segment(paragraph):
@@ -236,6 +236,7 @@ def segment(paragraph):
 
 def Seg(paragraph):
     atoms = segment(paragraph)
+    print atoms[0].sPOS #词性
     for a in atoms:
         if len(a.sPOS) < 1: continue
         i = paragraph[a.start: a.start + a.length]#.decode('utf-8')#.encode('ascii')
@@ -264,4 +265,5 @@ if __name__ == "__main__":
     p = s
     for t in Seg(p):
         s = '%s\t%s\t%s' % (t[0],t[1],translatePOS(t[1]))
+        #s = '%s\t' % (t[0])
         print(s)
